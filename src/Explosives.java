@@ -15,26 +15,53 @@ public class Explosives{
       @*/
     
     
+    /*
+     * Le nombre de produits assigné aux bâtiments est positif et inférieur à 30
+     */
     /*@ public invariant // Prop 2
       @ (0 <= nb_assign && nb_assign < 30);
       @*/
+    
+    /*
+     * La relation d'incompatibilité est établie entre deux produits
+     * C'est à dire : les éléments dans le tableau d'incompatibilité sont tous des Produits (commencent par "Prod")
+     */
     /*@ public invariant // Prop 3
       @ (\forall int i; 0 <= i && i < nb_inc; 
       @         incomp[i][0].startsWith("Prod") && incomp[i][1].startsWith("Prod"));
       @*/
+    
+    
+    /*
+     * La relation d'assignation est établie entre un batiment et un produit
+     * C'est à dire : les elements dans le tableau d'incompatibilite sont des couples : (batiment, produit)  (les batiments commencent par "Bat" et les produits commencent par "Prod")" 
+     */
     /*@ public invariant // Prop 4
       @ (\forall int i; 0 <= i && i < nb_assign; 
       @         assign[i][0].startsWith("Bat") && assign[i][1].startsWith("Prod"));
       @*/
+    
+    /*
+     * Un produit ne peut pas etre incompatible avec lui meme  
+     */
     /*@ public invariant // Prop 5
       @ (\forall int i; 0 <= i && i < nb_inc; !(incomp[i][0]).equals(incomp[i][1]));
       @*/
+    
+    /*
+     * L'icompatibilite est reciproque
+     * C'est a dire : Si un produit A est incompatible avec un produit B, alors le produit B est incompatible avec le produit A  
+     */
     /*@ public invariant // Prop 6
       @ (\forall int i; 0 <= i && i < nb_inc; 
       @        (\exists int j; 0 <= j && j < nb_inc; 
       @           (incomp[i][0]).equals(incomp[j][1]) 
       @              && (incomp[j][0]).equals(incomp[i][1]))); 
       @*/
+    
+    /*  
+     * Dans un meme batiment il ne peut pas y avoir de produits incompatibles entre eux
+     */
     /*@ public invariant // Prop 7
       @ (\forall int i; 0 <= i &&  i < nb_assign; 
       @     (\forall int j; 0 <= j && j < nb_assign; 
