@@ -6,9 +6,15 @@ public class Explosives{
     public int nb_assign = 0;
     public String [][] assign = new String[30][2];
  
+    
+    /*
+     * Le nombre de produits incompatibles est positif et inférieur à 50
+     */ 
     /*@ public invariant // Prop 1
       @ (0 <= nb_inc && nb_inc < 50);
       @*/
+    
+    
     /*@ public invariant // Prop 2
       @ (0 <= nb_assign && nb_assign < 30);
       @*/
