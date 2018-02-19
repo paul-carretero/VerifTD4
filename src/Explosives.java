@@ -1,3 +1,5 @@
+import java.util.Random;
+
 // Based on a B specification from Marie-Laure Potet.
 
 public class Explosives{
@@ -157,5 +159,59 @@ public class Explosives{
     	}
     	return is_in;
     }
+    
+   public /*@ pure @*/ boolean is_in_assign(String bat) {
+	   boolean assigned = false;
+	   for(int i = 0; i < nb_assign ; i++) {
+		   assigned = assigned || assign[i][0].equals(bat);
+	   }
+	   return assigned;
+   }
+   
+   public /*@ pure @*/ String new_bat() {
+	   String bat = "";
+	   Random r = new Random();
+	   bat = "Bat_" + r.nextInt(1000);
+	   return bat;
+   }
 
+  /*
+   * Fonction permettant de trouver un batiment dans lequel le produit peut être stocker sans risque de compatibilité.
+   */  
+  //@ requires prod.startsWith("Prod");
+  //@ ensures \result.startsWith("Bat");
+  public String findBat(String prod) {
+	  String bat = "Bat_1";
+	  boolean find = false;
+	  // trouver un batiment où les incompatibilités sont respectées
+	  for(int i = 0; i < nb_assign && !find ; i++ ) {
+		if(is_incomp_resp(assign[i][0], prod)) {
+			bat = assign[i][0];
+			find = true;
+		}  
+	  }
+	  // si aucun batiment déjà assigné ne respecte les incompatibilités, alors on alloue un nouveau batiment
+	  if(!find) {
+		 bat = new_bat();
+		 while(is_in_assign(bat)) {
+			 bat = new_bat();
+		 }
+	  }
+	  return bat;
+  }
+    
+  
+  public /*@ pure @*/String toString() {
+	  String s="";
+	  s += "incompatibilités : \n";
+	  for(int i = 0; i<nb_inc ; i ++) {
+		  s+= "[" + incomp[i][0] + "," + incomp[i][1] + "]\n";
+	  }
+	  s += "----------------------------\n";
+	  s += "assignations : \n";
+	  for(int i = 0; i<nb_assign ; i ++) {
+		  s+= "[" + assign[i][0] + "," + assign[i][1] + "]\n";
+	  }
+	  return s;
+  }
 }
