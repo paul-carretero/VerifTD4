@@ -73,8 +73,41 @@ public class Explosives{
 
 
     
-   
-    
+    /*
+     * Toutes les lignes du tableau des affectations (assign) sont differents deux a deux
+     */
+    /*@ public invariant // Prop 8
+    @ (\forall int i; 0 <= i &&  i < nb_assign; 
+    @     (\forall int j; 0 <= j && j < nb_assign; 
+    @        (i != j && (assign[i][0]).equals(assign [j][0])) ==>
+    @            !(assign[i][1]).equals(assign [j][1])
+    @     )
+    @ );              
+    @*/
+  
+
+    /*
+     * Un produit ne peut pas être stocké dans plus de trois bâtiments
+     */
+    /*@ public invariant // Prop 9
+    @ (nb_assign > 2) ==>
+    @ (\forall int i; 0 <= i &&  i < nb_assign; 
+    @     (\forall int j; 0 <= j && j < nb_assign; 
+    @         (\forall int k; 0 <= k &&  k < nb_assign; 
+    @            (i != j && i != k && j != k && 
+    @            (assign[i][1]).equals(assign [j][1])) ==> 
+    @                (!(assign[i][1]).equals(assign [k][1]))
+    @         )
+    @     )
+    @ );              
+    @*/
+  
+    /*
+     * Le nombre d’incompatibilités (nb_inc) ne peut jamais diminuer.
+     */
+    /*@ public constraint // Prop 10
+    @ 	\old(nb_inc) <= nb_inc ;              
+    @*/
     
     public void add_incomp(String prod1, String prod2){
 	incomp[nb_inc][0] = prod1;

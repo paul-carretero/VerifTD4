@@ -58,5 +58,53 @@ public class TestExplosivesJUnit4 {
 		}  
 	}
 
+	/* Test qui respecte la propriété 8 (invariant) : 
+	 * Toutes les lignes du tableau des affectations (assign) sont differents deux a deux 
+	 */
+	@Test
+	public void  test_Prop8() {
+		try{
+			e=new Explosives();
+			e.add_incomp("Prod_Dyna","Prod_Mite");
+			e.add_assign("Bat_1","Prod_Dyna");
+			e.add_assign("Bat_2","Prod_Mite");
+		} 	catch(JmlAssertionError e){
+				handleJMLAssertionError(e);		
+		} 	 
+		
+	}
+	
+	/* Test qui ne respecte pas la propriété 8 (invariant) : 
+	 * Toutes les lignes du tableau des affectations (assign) sont differents deux a deux 
+	 */
+	@Test (expected  = AssertionError.class)
+	public void  test_Prop8_error() {
+		try{
+			e=new Explosives();
+			e.add_incomp("Prod_Dyna","Prod_Mite");
+			e.add_assign("Bat_1","Prod_Dyna");
+			e.add_assign("Bat_1","Prod_Dyna");
+		} 	catch(JmlAssertionError e){
+				handleJMLAssertionError(e);		
+		} 	 
+		
+	}
+	
+	/* Test qui ne respecte pas la propriété 9 (invariant): 
+	 * Un produit ne peut pas être stocké dans plus de trois bâtiments
+	 */
+	@Test (expected  = AssertionError.class)
+	public void  test_Prop9_error() {
+		try{
+			e=new Explosives();
+			e.add_incomp("Prod_Dyna","Prod_Mite");
+			e.add_assign("Bat_1","Prod_Dyna");
+			e.add_assign("Bat_2","Prod_Dyna");
+			e.add_assign("Bat_3","Prod_Dyna");
+		} 	catch(JmlAssertionError e){
+				handleJMLAssertionError(e);		
+		}  
+	}
+	
 
 }
