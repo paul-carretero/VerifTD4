@@ -72,6 +72,10 @@ public class Explosives{
       @*/
 
 
+    
+   
+    
+    
     public void add_incomp(String prod1, String prod2){
 	incomp[nb_inc][0] = prod1;
 	incomp[nb_inc][1] = prod2;
@@ -79,11 +83,46 @@ public class Explosives{
 	incomp[nb_inc+1][0] = prod2;
 	nb_inc = nb_inc+2;
      }
+    
+    //@ requires is_incomp_resp(bat, prod) ; 
     public void add_assign(String bat, String prod){
 	assign[nb_assign][0] = bat;
 	assign[nb_assign][1] = prod;
 	nb_assign = nb_assign+1;
     }
+
     public void skip(){
     }
+    
+    
+    
+    public /*@ pure helper @*/ boolean is_incomp_resp(String bat, String prod) {
+    	boolean resp = true;
+    	for(int i = 0;i < nb_assign ; i++) {
+    		if((assign[i][0]).equals(bat)) {
+    			for(int k = 0; k < nb_inc; k++) {
+    				if(incomp[k][0].equals(prod)) {
+    					String prod_inc = incomp[k][1];
+    					if(is_in_bat( bat, prod_inc)) {resp = false;}
+    				}
+    				if(incomp[k][1].equals(prod)) {
+    					String prod_inc = incomp[k][0];
+    					if(is_in_bat(bat, prod_inc)) {resp = false;}
+    				}
+    			}
+    		}
+    	} 
+    	return resp;
+    }
+    
+    public /*@ pure helper @*/ boolean is_in_bat(String bat, String prod) {
+    	boolean is_in = false;
+    	for(int i = 0; i < nb_assign ; i ++) {
+    		if(assign[i][0].equals(bat)) {
+    			is_in = is_in || assign[i][1].equals(prod);
+    		}
+    	}
+    	return is_in;
+    }
+
 }
