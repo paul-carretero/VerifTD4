@@ -16,7 +16,9 @@ public class TestExplosivesFinBat {
 			e=new Explosives();
 			e.add_incomp("Prod_Dyna","Prod_Mite");
 			e.add_assign("Bat_1","Prod_Dyna");
-			e.add_assign(e.findBat("Prod_Mite"), "Prod_Mite");  
+			e.add_assign(e.findBat("Prod_Mite"), "Prod_Mite");
+			System.out.println("/** test find bat 1 **/");
+			System.out.println(e);  
 	}
 	
 	/* Test pour trouver un batiment pour assigner un produit, qui respecte les incompatibilités
@@ -31,6 +33,7 @@ public class TestExplosivesFinBat {
 			e.add_assign(e.findBat("Prod_Nitro"), "Prod_Nitro");
 			e.add_assign(e.findBat("Prod_Mite"), "Prod_Mite");
 			e.add_assign(e.findBat("Prod_Glycerine"), "Prod_Glycerine");
+			System.out.println("/** test find bat 2 **/");
 			System.out.println(e);  
 	}
 }

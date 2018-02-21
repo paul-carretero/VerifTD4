@@ -61,7 +61,54 @@ public class TestExplosivesJUnit4 {
 				handleJMLAssertionError(e);		
 		}  
 	}
-
+	
+	
+	/*
+	 * Test qui ne respecte pas l'invariant de la propriété 3 : 
+	 * La relation d'incompatibilité est établie entre deux produits
+	 */
+	@Test (expected = JmlAssertionError.class)
+	public void Test_Prop3_error() {
+		e = new Explosives();
+		e.add_incomp("produit1", "produit2");
+	}
+	
+	
+	/*
+	 * Test qui ne respecte pas l'invariant de la propriété 4 : 
+	 * La relation d'assignation est établie entre un batiment et un produit
+	 */
+	@Test (expected = JmlAssertionError.class)
+	public void Test_Prop4_error() {
+		e = new Explosives();
+		e.add_assign("Prod_1", "Bat_1");
+	}
+	
+	
+	
+	/*
+	 * Test qui ne respecte pas l'invariant de la propriété 5 : 
+	 * Un produit ne peut pas etre incompatible avec lui meme  
+	 */
+	@Test (expected = JmlAssertionError.class)
+	public void Test_Prop5_error() {
+		e = new Explosives();
+		e.add_incomp("Prod_1", "Prod_1");
+	}
+	
+	
+	
+	/*
+	 * Test qui ne respecte pas la précondition pour assigner des produits dans un batiment 
+	 */
+	@Test (expected = JmlAssertionError.Precondition.class)
+	public void Test_Prec_assign_error() {
+		e = new Explosives();
+		e.add_incomp("Prod_1", "Prod_2");
+		e.add_assign("Bat_1", "Prod_1");
+		e.add_assign("Bat_1", "Prod_2");
+	}
+	
 	/* Test qui respecte la propriété 8 (invariant) : 
 	 * Toutes les lignes du tableau des affectations (assign) sont differents deux a deux 
 	 */
