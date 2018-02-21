@@ -5,7 +5,10 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-
+/*
+ * Fichier de tests pour la classe Explosives.java
+ * Tests qui n'ont pas besoin d'avoir accès aux variables publiques (pour invalider des invariants) 
+ */
 public class TestExplosivesJUnit4 {
 
     static int nb_inconclusive = 0;
@@ -53,6 +56,7 @@ public class TestExplosivesJUnit4 {
 			e.add_assign("Bat_1","Prod_Nitro");
 			e.add_assign("Bat_2","Prod_Mite");
 			e.add_assign("Bat_1","Prod_Glycerine");
+			
 		} 	catch(JmlAssertionError e){
 				handleJMLAssertionError(e);		
 		}  
@@ -63,80 +67,35 @@ public class TestExplosivesJUnit4 {
 	 */
 	@Test
 	public void  test_Prop8() {
-		try{
-			e=new Explosives();
-			e.add_incomp("Prod_Dyna","Prod_Mite");
-			e.add_assign("Bat_1","Prod_Dyna");
-			e.add_assign("Bat_2","Prod_Mite");
-		} 	catch(JmlAssertionError e){
-				handleJMLAssertionError(e);		
-		} 	 
-		
+		e=new Explosives();
+		e.add_incomp("Prod_Dyna","Prod_Mite");
+		e.add_assign("Bat_1","Prod_Dyna");
+		e.add_assign("Bat_2","Prod_Mite");
 	}
 	
 	/* Test qui ne respecte pas la propriété 8 (invariant) : 
 	 * Toutes les lignes du tableau des affectations (assign) sont differents deux a deux 
 	 */
-	@Test (expected  = AssertionError.class)
+	@Test (expected  = JmlAssertionError.class)
 	public void  test_Prop8_error() {
-		try{
-			e=new Explosives();
-			e.add_incomp("Prod_Dyna","Prod_Mite");
-			e.add_assign("Bat_1","Prod_Dyna");
-			e.add_assign("Bat_1","Prod_Dyna");
-		} 	catch(JmlAssertionError e){
-				handleJMLAssertionError(e);		
-		} 	 
-		
+		e=new Explosives();
+		e.add_incomp("Prod_Dyna","Prod_Mite");
+		e.add_assign("Bat_1","Prod_Dyna");
+		e.add_assign("Bat_1","Prod_Dyna");
 	}
 	
 	/* Test qui ne respecte pas la propriété 9 (invariant): 
 	 * Un produit ne peut pas être stocké dans plus de trois bâtiments
 	 */
-	@Test (expected  = AssertionError.class)
+	@Test (expected  = JmlAssertionError.class)
 	public void  test_Prop9_error() {
-		try{
-			e=new Explosives();
-			e.add_incomp("Prod_Dyna","Prod_Mite");
-			e.add_assign("Bat_1","Prod_Dyna");
-			e.add_assign("Bat_2","Prod_Dyna");
-			e.add_assign("Bat_3","Prod_Dyna");
-		} 	catch(JmlAssertionError e){
-				handleJMLAssertionError(e);		
-		}  
+		e=new Explosives();
+		e.add_incomp("Prod_Dyna","Prod_Mite");
+		e.add_assign("Bat_1","Prod_Dyna");
+		e.add_assign("Bat_2","Prod_Dyna");
+		e.add_assign("Bat_3","Prod_Dyna");
 	}
 	
 
-	/* Test simple pour trouver un batiment pour assigner un produit, qui respecte les incompatibilités
-	 */
-	@Test 
-	public void  test_find_Bat() {
-		try{
-			e=new Explosives();
-			e.add_incomp("Prod_Dyna","Prod_Mite");
-			e.add_assign("Bat_1","Prod_Dyna");
-			e.add_assign(e.findBat("Prod_Mite"), "Prod_Mite");
-		} 	catch(JmlAssertionError e){
-				handleJMLAssertionError(e);		
-		}  
-	}
-	
-	/* Test pour trouver un batiment pour assigner un produit, qui respecte les incompatibilités
-	 * test pour 4 produits, chacun avec une incompatibilité
-	 */
-	@Test 
-	public void  test_find_Bat2() {
-		try{
-			e=new Explosives();
-			e.add_incomp("Prod_Dyna","Prod_Mite");
-			e.add_incomp("Prod_Nitro","Prod_Glycerine");
-			e.add_assign("Bat_1","Prod_Dyna");
-			e.add_assign(e.findBat("Prod_Nitro"), "Prod_Nitro");
-			e.add_assign(e.findBat("Prod_Mite"), "Prod_Mite");
-			e.add_assign(e.findBat("Prod_Glycerine"), "Prod_Glycerine");
-			System.out.println(e);
-		} 	catch(JmlAssertionError e){
-				handleJMLAssertionError(e);		
-		}  
-	}
+
 }
