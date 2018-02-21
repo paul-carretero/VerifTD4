@@ -67,10 +67,14 @@ public class TestExplosivesJUnit4 {
 	 * Test qui ne respecte pas l'invariant de la propriété 3 : 
 	 * La relation d'incompatibilité est établie entre deux produits
 	 */
-	@Test (expected = JmlAssertionError.class)
+	@Test
 	public void Test_Prop3_error() {
-		e = new Explosives();
-		e.add_incomp("produit1", "produit2");
+		try {
+			e = new Explosives();
+			e.add_incomp("produit1", "produit2");
+		} 	catch(JmlAssertionError e){
+			handleJMLAssertionError(e);		
+		}
 	}
 	
 	
@@ -78,10 +82,14 @@ public class TestExplosivesJUnit4 {
 	 * Test qui ne respecte pas l'invariant de la propriété 4 : 
 	 * La relation d'assignation est établie entre un batiment et un produit
 	 */
-	@Test (expected = JmlAssertionError.class)
+	@Test 
 	public void Test_Prop4_error() {
-		e = new Explosives();
-		e.add_assign("Prod_1", "Bat_1");
+		try{
+			e = new Explosives();
+			e.add_assign("Prod_1", "Bat_1");
+		} 	catch(JmlAssertionError e){
+			handleJMLAssertionError(e);		
+		}
 	}
 	
 	
@@ -101,12 +109,16 @@ public class TestExplosivesJUnit4 {
 	/*
 	 * Test qui ne respecte pas la précondition pour assigner des produits dans un batiment 
 	 */
-	@Test (expected = JmlAssertionError.Precondition.class)
+	@Test
 	public void Test_Prec_assign_error() {
-		e = new Explosives();
-		e.add_incomp("Prod_1", "Prod_2");
-		e.add_assign("Bat_1", "Prod_1");
-		e.add_assign("Bat_1", "Prod_2");
+		try {
+			e = new Explosives();
+			e.add_incomp("Prod_1", "Prod_2");
+			e.add_assign("Bat_1", "Prod_1");
+			e.add_assign("Bat_1", "Prod_2");
+		} 	catch(JmlAssertionError e){
+			handleJMLAssertionError(e);		
+		}
 	}
 	
 	/* Test qui respecte la propriété 8 (invariant) : 
@@ -123,24 +135,32 @@ public class TestExplosivesJUnit4 {
 	/* Test qui ne respecte pas la propriété 8 (invariant) : 
 	 * Toutes les lignes du tableau des affectations (assign) sont differents deux a deux 
 	 */
-	@Test (expected  = JmlAssertionError.class)
+	@Test
 	public void  test_Prop8_error() {
-		e=new Explosives();
-		e.add_incomp("Prod_Dyna","Prod_Mite");
-		e.add_assign("Bat_1","Prod_Dyna");
-		e.add_assign("Bat_1","Prod_Dyna");
+		try {
+			e=new Explosives();
+			e.add_incomp("Prod_Dyna","Prod_Mite");
+			e.add_assign("Bat_1","Prod_Dyna");
+			e.add_assign("Bat_1","Prod_Dyna");
+		}   catch(JmlAssertionError e){
+			handleJMLAssertionError(e);		
+		}
 	}
 	
 	/* Test qui ne respecte pas la propriété 9 (invariant): 
 	 * Un produit ne peut pas être stocké dans plus de trois bâtiments
 	 */
-	@Test (expected  = JmlAssertionError.class)
+	@Test
 	public void  test_Prop9_error() {
-		e=new Explosives();
-		e.add_incomp("Prod_Dyna","Prod_Mite");
-		e.add_assign("Bat_1","Prod_Dyna");
-		e.add_assign("Bat_2","Prod_Dyna");
-		e.add_assign("Bat_3","Prod_Dyna");
+		try {
+			e=new Explosives();
+			e.add_incomp("Prod_Dyna","Prod_Mite");
+			e.add_assign("Bat_1","Prod_Dyna");
+			e.add_assign("Bat_2","Prod_Dyna");
+			e.add_assign("Bat_3","Prod_Dyna");
+		} 	catch(JmlAssertionError e){
+			handleJMLAssertionError(e);		
+		}
 	}
 	
 
